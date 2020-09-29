@@ -1,0 +1,148 @@
+- id: '1599506395637'
+  alias: Ankomst
+  description: ''
+  trigger:
+  - device_id: f80e683f66e94e1b8ac8f95bbddb674f
+    domain: binary_sensor
+    entity_id: binary_sensor.hoveddor
+    platform: device
+    type: opened
+  condition: []
+  action:
+  - data:
+      message: Hoveddør åbnet
+    service: notify.mobile_app_jonas_phone
+  mode: single
+  
+- alias: Kaelderdoer
+  description: ''
+  trigger:
+  - device_id: Magnet Forrum
+    domain: binary_sensor
+    entity_id: binary_sensor.kalderdor
+    platform: device
+    type: opened
+  condition: []
+  action:
+  - data:
+      message: Kælderdør åbnet
+    service: notify.mobile_app_jonas_phone
+  mode: single
+  
+- alias: Terassedør
+  description: ''
+  trigger:
+  - device_id: Terassedør
+    domain: binary_sensor
+    entity_id: binary_sensor.terassedor
+    platform: device
+    type: opened
+  condition: []
+  action:
+  - data:
+      message: Terassedør åbnet
+    service: notify.mobile_app_jonas_phone
+  mode: single
+
+- alias: Post
+  description: ''
+  trigger:
+  - device_id: Vibrations sensor
+    domain: binary_sensor
+    entity_id: binary_sensor.postmelder
+    platform: device
+    type: detected
+  condition: []
+  action:
+  - data:
+      message: Post
+    service: notify.mobile_app_jonas_phone
+  mode: single
+
+- alias: Turn on toerrerum light when there is movement
+  trigger:
+    platform: state
+    entity_id: binary_sensor.lumi_unk_model_37b65e04_occupancy
+    to: 'on'
+  action:
+  - service: light.turn_on
+    entity_id: light.toerrerum
+  - service: notify.mobile_app_jonas_phone
+    data:
+      title: Pulterrum
+      message: Lys tændt
+
+- alias: Turn off toerrerum light 10 minutes after last movement
+  trigger:
+    platform: state
+    entity_id: binary_sensor.lumi_unk_model_37b65e04_occupancy
+    to: 'off'
+    for:
+      minutes: 10
+  action:
+  - service: light.turn_off
+    entity_id: light.toerrerum
+  - service: notify.mobile_app_jonas_phone
+    data:
+      title: Pulterrum
+      message: Lys slukket
+
+- alias: Turn on vaskerum light when there is movement
+  trigger:
+    platform: state
+    entity_id: binary_sensor.vaskerum
+    to: 'on'
+  action:
+  - service: light.turn_on
+    entity_id: light.Vaskerum
+  - service: notify.mobile_app_jonas_phone
+    data:
+      title: Vaskerum
+      message: Lys tændt
+
+- alias: Turn off vaskerum light 10 minutes after last movement
+  trigger:
+    platform: state
+    entity_id: binary_sensor.vaskerum
+    to: 'off'
+    for:
+      minutes: 10
+  action:
+  - service: light.turn_off
+    entity_id: light.Vaskerum
+  - service: notify.mobile_app_jonas_phone
+    data:
+      title: Vaskerum
+      message: Lys slukket
+      
+- alias: Turn on kaelder light when there is movement
+  trigger:
+    platform: state
+    entity_id: binary_sensor.trappemotion
+    to: 'on'
+  action:
+  - service: light.turn_on
+    data:
+      entity_id:
+      -  light.trappenedre
+      -  light.fordelingsgang
+      -  light.kaelderentre
+  - service: notify.mobile_app_jonas_phone
+    data:
+      title: Kældergang
+      message: Lys tændt
+
+- alias: Turn off kaelder light 10 minutes after last movement
+  trigger:
+    platform: state
+    entity_id: binary_sensor.trappemotion
+    to: 'off'
+    for:
+      minutes: 10
+  action:
+  - service: light.turn_off
+    entity_id: light.Vaskerum
+  - service: notify.mobile_app_jonas_phone
+    data:
+      title: Kældergang
+      message: Lys slukket
