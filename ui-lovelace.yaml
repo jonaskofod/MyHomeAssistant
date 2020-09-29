@@ -1,0 +1,172 @@
+title: Home
+visible:
+      - user: cc0cf38ff4c94617afe8632be155c116
+      - user: f2eedbe05675493582b342cfc8eb8168
+      - user: 5649bec2dedd4a00a4ac42216f05c20f
+resources:
+   - url: /local/xiaomi-vacuum-card.js?v=3.0.1
+     type: module
+   - type: module
+     url: /local/light-with-profiles.js
+   - url: /hacsfiles/hass-shutter-card/hass-shutter-card.js
+     type: module
+   - url: http://homeassistant:8123/api/hassio_ingress/_A4CpTPpFQaovjGnBaU4FgxwaryU3qL2RADZfieqhMs/api/file?filename=/config/www/plant-card.js
+     type: js
+     
+light_profiles:
+  bright: '0.457,0.408,254'
+  dimmed: '0.457,0.408,77'
+  nightlight: '0.509,0.411,1'
+  brightness_only: '0,0,150'
+  
+views:
+  - path: default_view
+    title: Home
+    badges:
+      - entity: binary_sensor.remote_ui
+      - entity: binary_sensor.updater
+      - entity: person.jonas_kofod
+      - entity: sensor.jonas_phone_battery_level
+      - entity: sensor.jonas_phone_battery_state
+      - entity: sensor.jonas_phone_bssid
+      - entity: sensor.jonas_phone_connection_type
+      - entity: sensor.jonas_phone_sim_1
+      - entity: sensor.jonas_phone_sim_2
+      - entity: sensor.jonas_phone_ssid
+      - entity: sensor.jonas_phone_geocoded_location
+      - entity: sensor.jonas_phone_last_update_trigger
+      - entity: sensor.denmark_coronavirus_confirmed
+      - entity: sensor.denmark_coronavirus_current
+      - entity: sensor.denmark_coronavirus_recovered
+      - entity: sensor.denmark_coronavirus_deaths
+      - entity: sensor.landroid_oda_battery
+      - entity: sensor.landroid_oda_error
+      - entity: sensor.landroid_oda_status
+      - entity: sensor.hacs
+      - entity: sensor.onhub_b_sent
+      - entity: sensor.onhub_packets_received
+      - entity: sensor.onhub_packets_sent
+      - entity: sensor.onhub_kib_s_received
+      - entity: sensor.onhub_kib_s_sent
+      - entity: sensor.onhub_packets_s_received
+      - entity: sensor.onhub_packets_s_sent
+      - entity: sensor.onhub_b_received
+      - entity: sun.sun
+    cards:
+      - type: xiaomi-vacuum-card
+        entity: vacuum.xiaomi_vacuum_cleaner
+      - type: custom:vacuum-card
+        entity: vacuum.xiaomi_vacuum_cleaner
+      - type: entities
+        entities:
+          - light.lysekrone1
+          - light.lysekrone2
+          - light.lysekrone3
+        title: Anine
+      - type: entities
+        entities:
+          - light.lanterne          
+          - sensor.lumi_lumi_weather_humidity
+          - sensor.lumi_lumi_weather_temperature
+        title: Villum
+      - type: entities
+        entities:
+          - light.sovevaerelseloft
+          - entity: light.bordlampe
+        title: Soveværelse
+      - type: entities
+        entities:
+          - light.trappeovre
+          - light.gangmodvej
+          - light.gang
+        title: Gang
+      - type: entities
+        entities:
+          - switch.globus
+          - light.gulvlampe
+          - cover.rullegardin_kontor_window_covering
+        title: Kontor
+      - type: entities
+        entities:
+          - light.spisebordmodtv
+          - light.spisebordmodkk
+        title: Spisestue
+      - type: entities
+        entities:
+          - light.morslampe
+          - light.blalampe
+          - light.phlampe
+          - light.laenestol
+        title: Stue
+      - type: entities
+        entities:
+          - sensor.tempterasse
+          - sensor.fugtighedterasse
+          - sensor.luxterasse
+          - light.terasselampe
+          - light.havelampe_level_light_color_on_off
+        title: Terasse
+      - type: entities
+        entities:
+          - light.hoveddor
+          - light.hoveddor2
+          - binary_sensor.postmelder
+        title: Indkørsel
+      - type: entities
+        entities:
+          - light.trappenedre
+          - light.fordelingsgang
+          - light.kaelderentre
+        title: Kældergang
+      - type: entities
+        entities:
+          - light.vaskerum
+        title: Vaskerum
+      - type: entities
+        entities:
+          - light.toerrerum
+        title: Tørrerum
+      - type: entities
+        entities:
+          - light.gaestevaerelse
+        title: Gæsteværelse
+
+      - type: media-control
+        entity: media_player.anine_2
+      - type: media-control
+        entity: media_player.anine
+      - type: media-control
+        entity: media_player.bornene
+      - type: media-control
+        entity: media_player.kokken
+      - type: media-control
+        entity: media_player.reol
+      - type: media-control
+        entity: media_player.skrivebord
+      - type: media-control
+        entity: media_player.skraleren
+      - type: media-control
+        entity: media_player.sovevaerelse
+      - type: media-control
+        entity: media_player.sovevaerelse_2
+      - type: media-control
+        entity: media_player.stuen
+      - type: media-control
+        entity: media_player.villum
+      - type: media-control
+        entity: media_player.villum_2
+      - type: entities
+        entities:
+          - scene.farvel
+          - scene.godnat
+          - scene.godnat_2
+          - scene.sluk_kaelder
+          - scene.spise
+          - scene.tv_sovevaerelse
+        title: Scene
+      - type: entities
+        entities:
+          - vacuum.xiaomi_vacuum_cleaner
+        title: Vacuum
+      - type: weather-forecast
+        entity: weather.home
