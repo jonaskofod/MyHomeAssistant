@@ -1,0 +1,118 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+landroid_cloud:
+  - email: !secret
+    password: !secret
+
+vacuum:
+  - platform: xiaomi_miio
+    host: !secret
+    token: !secret
+    
+zha_map:
+      
+# Example configuration.yaml entry
+surepetcare:
+  username: !secret
+  password: !secret
+  flaps: [424705]
+  pets: [113324, 113357]
+
+# Neatmo
+netatmo:
+  client_id: !secret
+  client_secret: !secret
+
+#Zigbee panel
+panel_custom:
+  - name: custom-panel-zigzag
+    sidebar_title: Zigzag
+    sidebar_icon: mdi:zigbee
+    url_path: zigzag
+    module_url: /config/www/zigzag/zigzag-panel.js
+    trust_external_script: true
+    config:
+      who: world    
+lovelace:
+   mode: storage
+   resources:
+    - url: /local/light-with-profiles.js
+      type: module
+
+   dashboards:
+     lovelace-generated: # Needs to contain a hyphen (-)
+       mode: yaml
+       filename: notexist.yaml
+       title: Generated
+       icon: mdi:tools
+       show_in_sidebar: true
+       require_admin: true
+
+#Planter
+sensor:
+  - platform: miflora
+    mac: '80:EA:CA:89:66:7E'
+    name: mi flora 01
+    force_update: true
+    median: 3
+    go_unavailable_timeout: 43200
+    monitored_conditions:
+      - moisture
+      - light
+      - temperature
+      - conductivity
+      - battery
+
+  - platform: template
+    sensor:
+      06_ed_ppfd:
+        value_template: >-
+          {{ states('sensor.mi_flora_01_light_intensity') | float * 0.0185 | float / 1000000 }}
+          unit_of_measurement: "mol/s•m²"
+
+  - platform: integration
+    name: 06_ed_total_light_integral
+    source: sensor.06_ed_ppfd
+    unit_time: s
+    round: 2
+
+utility_meter:
+  06_ed_daily_light_integral:
+  source: sensor.06_ed_total_light_integral
+  cycle: daily
+  tariffs:
+    - peak
+  offset:
+    minutes: 30
+      
+plant:
+  # Orchidaceae, Phalaenopsis
+  Elefantore:
+    sensors:
+      moisture: sensor.mi_flora_01_moisture
+      battery: sensor.mi_flora_01_battery
+      temperature: sensor.mi_flora_01_temperature
+      conductivity: sensor.mi_flora_01_conductivity
+      brightness: sensor.mi_flora_01_light_intensity
+    min_moisture: 15
+    max_moisture: 60
+    min_battery: 20
+    min_conductivity: 350
+    max_conductivity: 2000
+    min_temperature: 10
+    max_temperature: 32
+    min_brightness: 1000
+    max_brightness: 22500
+    check_days: 3      
+
+discovery:
